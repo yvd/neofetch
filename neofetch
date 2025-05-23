@@ -3079,7 +3079,38 @@ get_resolution() {
         ;;
 
         *)
-            if type -p xrandr >/dev/null && [[ $DISPLAY && -z $WAYLAND_DISPLAY ]]; then
+            # KDE Wayland support using kscreen-doctor (prioritized for KDE environments)
+            if type -p kscreen-doctor >/dev/null && type -p jq >/dev/null && [[ $WAYLAND_DISPLAY ]]; then
+                local monitors_json monitors_list
+                monitors_json="$(kscreen-doctor -j 2>/dev/null)"
+
+                if [[ $? -eq 0 && -n "$monitors_json" ]]; then
+                    # Extract enabled monitors with their current resolution and refresh rate using jq
+                    if [[ "$refresh_rate" == "off" ]]; then
+                        # Resolution only: WIDTHxHEIGHT
+                        monitors_list="$(echo "$monitors_json" | \
+                            jq -r '.outputs[]? | select(.enabled == true and .connected == true) |
+                                   . as $output |
+                                   (.modes[]? | select(.id == $output.currentModeId)) as $mode |
+                                   "\($mode.size.width)x\($mode.size.height)"' 2>/dev/null | \
+                            tr '\n' ',' | sed 's/,/, /g; s/, $//')"
+                    else
+                        # Resolution with refresh: WIDTHxHEIGHT@REFRESHHz
+                        monitors_list="$(echo "$monitors_json" | \
+                            jq -r '.outputs[]? | select(.enabled == true and .connected == true) |
+                                   . as $output |
+                                   (.modes[]? | select(.id == $output.currentModeId)) as $mode |
+                                   "\($mode.size.width)x\($mode.size.height)@\($mode.refreshRate | round)Hz"' 2>/dev/null | \
+                            tr '\n' ',' | sed 's/,/, /g; s/, $//')"
+                    fi
+
+                    if [[ -n "$monitors_list" ]]; then
+                        resolution="$monitors_list"
+                    fi
+                fi
+
+            # X11 support (fallback if Wayland detection failed or not available)
+            elif [[ -z "$resolution" ]] && type -p xrandr >/dev/null && [[ $DISPLAY && -z $WAYLAND_DISPLAY ]]; then
                 case $refresh_rate in
                     "on")
                         resolution="$(xrandr --nograb --current |\
