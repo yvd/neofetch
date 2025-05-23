@@ -21,5 +21,17 @@ You can further configure Neofetch to display exactly what you want it to. Throu
 
 Neofetch supports almost 150 different operating systems. From Linux to Windows, all the way to more obscure operating systems like Minix, AIX and Haiku. If your favourite operating system is unsupported: Open up an issue and support will be added.
 
+## Multi-Monitor Support
+
+Neofetch now includes enhanced multi-monitor detection for **KDE Wayland** environments in linux. When running on KDE with Wayland, neofetch will automatically detect and display resolution information for all connected monitors.
+
+**Features:**
+- Detects all enabled monitors automatically
+- Shows resolutions with optional refresh rates (`--refresh_rate on`)
+- Tested on Arch Linux + KDE + Wayland setups
+- Falls back to standard X11 detection methods when needed
+
+**Requirements:** `kscreen-doctor` and `jq` (available in most Linux distributions)
+
 
 ### More: \[[Dependencies](https://github.com/dylanaraps/neofetch/wiki/Dependencies)\] \[[Installation](https://github.com/dylanaraps/neofetch/wiki/Installation)\] \[[Wiki](https://github.com/dylanaraps/neofetch/wiki)\]
