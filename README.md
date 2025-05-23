@@ -31,7 +31,7 @@ Neofetch now includes enhanced multi-monitor detection for **KDE Wayland** envir
 - Tested on Arch Linux + KDE + Wayland setups
 - Falls back to standard X11 detection methods when needed
 
-**Requirements:** `kscreen-doctor` and `jq` (available in most Linux distributions)
+**Requirements:** `kscreen-doctor` and `jq` (available in most Linux distributions with KDE Plasma Desktop Environment)
 
 
 ### More: \[[Dependencies](https://github.com/dylanaraps/neofetch/wiki/Dependencies)\] \[[Installation](https://github.com/dylanaraps/neofetch/wiki/Installation)\] \[[Wiki](https://github.com/dylanaraps/neofetch/wiki)\]
