@@ -15,7 +15,7 @@ The overall purpose of Neofetch is to be used in screen-shots of your system. Ne
 
 The information by default is displayed alongside your operating system's logo. You can further configure Neofetch to instead use an image, a custom ASCII file, your wallpaper or nothing at all.
 
-<img src="./resources/neofetch_multi_monitor_info.png" alt="neofetch" align="right" height="240px">
+<img src="./resources/neofetch_multi_monitor_info.png" alt="neofetch" align="right">
 
 You can further configure Neofetch to display exactly what you want it to. Through the use of command-line flags and the configuration file you can change existing information outputs or add your own custom ones.
 
